@@ -1,0 +1,99 @@
+{
+  "modelVersion": "hass-mendeley-ajuste-v1",
+  "source": "https://data.mendeley.com/datasets/3xd9n945v8/1",
+  "authors": "Xavier, Rodrigues y Silva",
+  "license": "CC BY 4.0",
+  "selection": "Tres aciertos de mayor puntuación y un caso de menor puntuación entre 50 imágenes de validación (10 por etapa, semilla 71); además un error conocido. Ejemplos seleccionados para demostración, no estimación imparcial de exactitud.",
+  "cases": [
+    {
+      "id": "01-inmadura",
+      "image": "imagenes/01-inmadura.jpg",
+      "originalFile": "T10_d01_034_a_1.jpg",
+      "sample": 34,
+      "split": "val",
+      "referenceStage": 1,
+      "sha256": "1e9a193286fa3cfa2d379c2bbdc96ff27f487de592e05652e49a5f6acea73ce3",
+      "expected": {
+        "status": "estimated",
+        "stage": 1,
+        "score": 0.9999672174453735,
+        "defectLabels": [
+          "Suffocation"
+        ]
+      },
+      "snapshot": "resultados/01-inmadura/result.json"
+    },
+    {
+      "id": "02-madura",
+      "image": "imagenes/02-madura.jpg",
+      "originalFile": "T10_d15_149_b_3.jpg",
+      "sample": 149,
+      "split": "val",
+      "referenceStage": 3,
+      "sha256": "055b744e3d51dec78a6da6a5fa2b49804541d51933dabb5ecad5a8c2a4e1451a",
+      "expected": {
+        "status": "estimated",
+        "stage": 3,
+        "score": 0.8791747689247131,
+        "defectLabels": [
+          "Suffocation"
+        ]
+      },
+      "snapshot": "resultados/02-madura/result.json"
+    },
+    {
+      "id": "03-sobremadura",
+      "image": "imagenes/03-sobremadura.jpg",
+      "originalFile": "T10_d25_237_b_5.jpg",
+      "sample": 237,
+      "split": "val",
+      "referenceStage": 5,
+      "sha256": "72b044dcde2062d90713335236aef0e103be888062572a250842b690f33f6829",
+      "expected": {
+        "status": "estimated",
+        "stage": 5,
+        "score": 0.9987371563911438,
+        "defectLabels": [
+          "Suffocation"
+        ]
+      },
+      "snapshot": "resultados/03-sobremadura/result.json"
+    },
+    {
+      "id": "04-requiere-revision",
+      "image": "imagenes/04-requiere-revision.jpg",
+      "originalFile": "T10_d15_233_a_3.jpg",
+      "sample": 233,
+      "split": "val",
+      "referenceStage": 3,
+      "sha256": "43934c28dfc84961739e94e0bc245b0e0cca1296d8b13fb27f44c6d5c459c2eb",
+      "expected": {
+        "status": "uncertain",
+        "stage": null,
+        "score": 0.43616533279418945,
+        "defectLabels": [
+          "Suffocation"
+        ]
+      },
+      "snapshot": "resultados/04-requiere-revision/result.json"
+    },
+    {
+      "id": "05-limite-del-modelo",
+      "image": "imagenes/05-limite-del-modelo.jpg",
+      "originalFile": "T10_d05_220_a_2.jpg",
+      "sample": 220,
+      "split": "val",
+      "referenceStage": 2,
+      "sha256": "d3c08fc75316d9a9c7ddb6e056495c2339a0e017b3eb9a33c6c792d9ce6d440c",
+      "expected": {
+        "status": "estimated",
+        "stage": 1,
+        "score": 0.8868252038955688,
+        "defectLabels": [
+          "Suffocation"
+        ]
+      },
+      "snapshot": "resultados/05-limite-del-modelo/result.json"
+    }
+  ]
+}

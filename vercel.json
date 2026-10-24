@@ -1,0 +1,38 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": "apps/web/dist",
+  "framework": "vite",
+  "rewrites": [
+    {
+      "source": "/api/public/:id",
+      "destination": "/api/passport?id=:id"
+    },
+    {
+      "source": "/p/:id",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/consultar",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/escanear",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/l/:id",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/api/public-lots/:id",
+      "destination": "/api/passport?kind=lot&id=:id"
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "/consultar",
+      "permanent": false
+    }
+  ]
+}

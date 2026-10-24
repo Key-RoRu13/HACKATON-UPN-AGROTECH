@@ -1,0 +1,38 @@
+import { test, expect } from '@playwright/test';
+import QRCode from 'qrcode';
+
+test('ficha → QR del lote → confirmadas → evidencia de inspección', async ({ page, request }) => {
+  const lot = (await (await request.get('/api/lots')).json())[0];
+  const existingConfirmed = (await (await request.get('/api/inspections')).json()).filter((i: any) => i.lotId === lot.id && i.status === 'confirmed').length;
+  const pending = await (await request.post('/api/inspections', { data: { lotId: lot.id } })).json();
+  const confirmation = await request.post(`/api/inspections/${pending.id}/confirm`, { data: { action: 'confirm' } });
+  const confirmed = await confirmation.json();
+  await request.post('/api/inspections', { data: { lotId: lot.id } });
+  await page.goto('/dashboard/lotes');
+  const card = page.locator('.lot-summary').filter({ has: page.getByRole('heading', { name: lot.id, exact: true }) });
+  await card.getByRole('button', { name: 'Editar ficha productiva' }).click();
+  await card.getByLabel('Empresa responsable').fill('Empresa RIKUY de prueba');
+  await card.getByLabel('Fundo', { exact: true }).fill('Fundo prueba');
+  await card.getByLabel('Ubicación productiva').fill('Chao, Perú');
+  await card.getByLabel('Parcela o sector').fill('Sector norte');
+  await card.getByLabel('Fecha de cosecha').fill('2026-10-15');
+  await card.getByLabel('Fecha de empaque').fill('2026-10-16');
+  await card.getByRole('button', { name: 'Guardar ficha y publicar' }).click();
+  await expect(card.getByText('Ficha guardada localmente.', { exact: false })).toBeVisible();
+  await card.getByRole('button', { name: 'QR del lote', exact: true }).click();
+  await expect(card.locator('.public-link')).toHaveAttribute('href', new RegExp('/l/' + lot.publicId + '$'));
+  const buffer = await QRCode.toBuffer(`https://rikuy.example/l/${lot.publicId}`, { width: 400 });
+  await page.goto('/consultar');
+  await page.getByLabel('Imagen del código QR').setInputFiles({ name: 'lote.png', mimeType: 'image/png', buffer });
+  await expect(page).toHaveURL(new RegExp('/l/' + lot.publicId + '$'));
+  await expect(page.getByText('Fundo prueba', { exact: true })).toBeVisible();
+  await expect(page.locator('.lot-confirmed-list a')).toHaveCount(existingConfirmed + 1);
+  await page.getByRole('link', { name: 'Ver fotografía y análisis' }).click();
+  await expect(page).toHaveURL(new RegExp('/p/' + confirmed.publicId + '$'));
+  await expect(page.getByText('Sector norte', { exact: true })).toBeVisible();
+  await expect(page.getByRole('img', { name: 'Fotografía de la muestra de palta', exact: true })).toBeVisible();
+  await page.getByRole('link', { name: 'Consultar pasaporte e historial del lote' }).click();
+  await page.setViewportSize({ width: 390, height: 844 });
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  await page.screenshot({ path: 'test-results/lot-passport.png', fullPage: true });
+});

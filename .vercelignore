@@ -1,0 +1,17 @@
+.data
+.env
+.env.*
+.git
+.aws
+.codex
+.agents
+.vercel
+node_modules
+ml
+datasets
+notebooks
+tests
+test-results
+playwright-report
+demo-video
+docs

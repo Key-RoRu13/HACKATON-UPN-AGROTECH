@@ -1,0 +1,24 @@
+{
+  "name": "rikuy",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "workspaces": [
+    "apps/web"
+  ],
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "build": "npm run build --workspace apps/web",
+    "start": "node server/index.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "test:e2e": "npm run build && playwright test",
+    "public:gateway": "node server/public-gateway.mjs",
+    "publish:passports": "node scripts/publish-passports.mjs"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.64.1"
+  },
+  "engines": {
+    "node": "22.x"
+  }
+}

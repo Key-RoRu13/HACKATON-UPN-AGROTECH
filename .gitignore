@@ -1,0 +1,41 @@
+# Dependencias y compilación
+node_modules/
+apps/web/dist/
+*.tsbuildinfo
+
+# Configuración privada y datos de ejecución
+.env
+.env.*
+!.env.example
+.data/
+.vercel/
+.aws/
+.codex/
+.agents/
+
+# Informes generados y cachés
+playwright-report/
+test-results/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+.DS_Store
+Thumbs.db
+*.log
+
+# Datasets locales: conservar solo documentación y plantilla de evaluación
+datasets/**
+!datasets/palta/
+!datasets/palta/README.md
+!datasets/palta/AUDITORIA.md
+!datasets/palta/validacion-externa/
+!datasets/palta/validacion-externa/README.md
+!datasets/palta/validacion-externa/registro.csv
+!datasets/palta/validacion-externa/fotos/
+!datasets/palta/validacion-externa/fotos/.gitkeep
+
+# Material intermedio de grabación
+/demo-video/recursos/
